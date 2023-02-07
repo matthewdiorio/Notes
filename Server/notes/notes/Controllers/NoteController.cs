@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Formats.Asn1;
 using System.Reflection.Metadata.Ecma335;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Cors;
 
 namespace notes.Controllers
 {
@@ -63,6 +64,8 @@ namespace notes.Controllers
                 return BadRequest("The note was not found");
 
             _dataContext.Notes.Remove(dbNote);
+            await _dataContext.SaveChangesAsync();
+
             return Ok(await _dataContext.Notes.ToListAsync());
         }
 
